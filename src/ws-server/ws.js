@@ -1,8 +1,18 @@
 var WebSocketServer = require('ws').Server,
-  wss = new WebSocketServer({port: 40510})
+  wss = new WebSocketServer({port: 40511})
 
 
-let tracks = [
+
+
+
+wss.on('connection', function (ws) {
+  ws.on('message', function (message) {
+    console.log('received: %s', message)
+  })
+
+  let idx=0;
+
+  let tracks = [
     {"4ab": {"a": 0, "s": 2, "b": 33.7, "t": "H", "v": 1.19, "y": 0.14, "x": 0.292, "r": 5, "d": 5.71}},
     {"4ab": {"a": 0, "s": 2, "b": 34.18, "t": "H", "v": 1.19, "y": 0.139, "x": 0.295, "r": 5, "d": 5.75}},
     {"4ab": {"a": 0, "s": 2, "b": 35.0, "t": "H", "v": 1.19, "y": 0.138, "x": 0.3, "r": 5, "d": 5.79}},
@@ -17,14 +27,23 @@ let tracks = [
     {"4ab": {"a": 0, "s": 2, "b": 36.03, "t": "H", "v": 1.17, "y": 0.131, "x": 0.306, "r": 5, "d": 6.06}}
 ];
 
+  setInterval(() => {
+    console.log("a", JSON.stringify(tracks[idx]))
+    ws.send(JSON.stringify(tracks[idx]))
+    idx++;
+    if (idx === tracks.length) {
+          idx = 0;
+    }
+  },1000);
 
-wss.on('connection', function (ws) {
-  ws.on('message', function (message) {
-    console.log('received: %s', message)
-  })
 
-  setInterval(
-    () => ws.send(`${new Date()}`),
-    1000
-  )
+  // setInterval(
+  //   () => {
+
+  //       tracks.
+
+  //       ws.send(`${new Date()}`)
+  //   },
+  //   1000
+  // )
 })

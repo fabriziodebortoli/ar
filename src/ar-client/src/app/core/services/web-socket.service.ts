@@ -13,7 +13,7 @@ export class WebSocketService  {
     public open = new EventEmitter<any>();
     public close = new EventEmitter<any>();
 
-    private url:string = 'ws://localhost:40510';
+    private url:string = 'ws://localhost:40511';
 
     constructor() {
         
