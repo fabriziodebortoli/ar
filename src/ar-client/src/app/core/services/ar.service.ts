@@ -7,18 +7,18 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Injectable()
 export class ArService {
-    
+
     public connection: WebSocket;
     public socketConnectionStatus = ConnectionStatus.None;
 
     public connectionStatus = new EventEmitter<ConnectionStatus>();
 
     public track = new EventEmitter<Track>();
-    
+
     public open = new EventEmitter<any>();
     public close = new EventEmitter<any>();
 
-    private url:string = 'ws://localhost:40511';
+    private url: string = 'ws://localhost:40511';
 
     subscriptions: Subscription[] = [];
 
@@ -30,15 +30,18 @@ export class ArService {
         this.connectionStatus.emit(status);
     }
 
-    wsConnect(){
-        
+    wsConnect() {
+
         const $this = this;
 
         this.connection = new WebSocket(this.url);
-        
-        this.connection.onmessage = function (track:Track) {
-            console.log("Track received", track);
-            $this.track.emit(track);
+
+        this.connection.onmessage = function (message) {
+            let tt = JSON.parse(message.data);
+            let id = Object.keys(tt)[0];
+            let t = tt[Object.keys(tt)[0]];
+            console.log("Track received id", id, " - data", t);
+            $this.track.emit(tt);
         }
 
         this.connection.onerror = (arg) => {
@@ -65,8 +68,8 @@ export class ArService {
         this.connectionStatus.emit(status);
     }
 
-    dispose(){
+    dispose() {
         this.subscriptions.forEach(subs => subs.unsubscribe());
     }
-    
+
 }

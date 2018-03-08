@@ -1,31 +1,23 @@
-import { Component, ElementRef, ViewChild, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, Input, OnInit, ViewContainerRef, ComponentRef, ComponentFactoryResolver, AfterContentInit } from '@angular/core';
 import { Track } from '../models/track.model';
 import { TracksService } from '../core/services/tracks.service';
+import { TrackComponent } from './track/track.component';
 
 @Component({
     selector: 'ar-tracks',
     templateUrl: './tracks.component.html',
     styleUrls: ['./tracks.component.scss']
 })
-export class TracksComponent implements OnInit {
+export class TracksComponent implements AfterContentInit {
 
-    @ViewChild('tc') tc: ElementRef;
+    tracks: Track[];
 
-    constructor(private tracksService: TracksService) {
+    constructor(
+        private tracksService: TracksService,
+        private componentResolver: ComponentFactoryResolver
+    ) { }
 
-    }
-
-    ngOnInit() {
-        this.tracksService.getTracks().subscribe((tracks: Track[]) => {
-            this.drawTracks(tracks);
-        });
-    }
-
-    drawTracks(tracks: Track[]) {
-        tracks.forEach(t => this.drawTrack(t))
-    }
-
-    drawTrack(track: Track) {
-        console.log("Drawing track", track);
+    ngAfterContentInit() {
+        this.tracksService.getTracks().subscribe((tracks: Track[]) => this.tracks = tracks);
     }
 }

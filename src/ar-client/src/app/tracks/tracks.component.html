@@ -1,1 +1,3 @@
-<div class="tracks-container" #tc></div>
+<div class="tracks-container" #tracksContainer>
+    <ar-track *ngFor="let track of tracks" [track]="track"></ar-track>
+</div>
