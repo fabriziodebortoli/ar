@@ -5,12 +5,13 @@ import {ArCoreModule} from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { VideoComponent } from './video/video.component';
-
+import { TracksComponent } from './tracks/tracks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    VideoComponent
+    VideoComponent,
+    TracksComponent
   ],
   imports: [
     BrowserModule,

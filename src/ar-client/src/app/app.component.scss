@@ -1,0 +1,16 @@
+.monitor{
+    width:800px;
+    height:450px;
+    border:1px solid green;
+    position:relative;
+}
+
+.track{
+    position: absolute;
+    top:50px;
+    width: 30px;
+    height: 30px;
+    border-radius:30px;
+    background: #ff002d;
+    left: 50px;
+}

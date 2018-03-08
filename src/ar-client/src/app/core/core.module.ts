@@ -2,22 +2,17 @@ import { RouterModule } from '@angular/router';
 import { ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
-import { WebSocketService } from './services/web-socket.service';
 import { ArService } from './services/ar.service';
+import { TracksService } from './services/tracks.service';
 
 export const AR_SERVICES = [
     ArService,
-    WebSocketService
+    TracksService
 ];
 
 @NgModule({
-    imports: [
-        HttpModule
-
-    ],
-    providers: [
-        
-    ],
+    imports: [HttpModule],
+    providers: [],
     declarations: [],
     exports: [],
     entryComponents: []
@@ -29,7 +24,7 @@ export class ArCoreModule {
             providers: [AR_SERVICES]
         };
     }
-    constructor( @Optional() @SkipSelf() parentModule: ArCoreModule) {
+    constructor(@Optional() @SkipSelf() parentModule: ArCoreModule) {
         if (parentModule) {
             throw new Error(
                 'TbCoreModule is already loaded. Import it in the AppModule only');
