@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 
 import { ConnectionStatus } from '../../models/connection-status.model';
+import { Track } from '../../models/track.model';
 
 @Injectable()
 export class WebSocketService  {
@@ -9,7 +10,8 @@ export class WebSocketService  {
 
     public connectionStatus = new EventEmitter<ConnectionStatus>();
 
-    public track = new EventEmitter<any>();
+    public track = new EventEmitter<Track>();
+    
     public open = new EventEmitter<any>();
     public close = new EventEmitter<any>();
 
@@ -25,10 +27,13 @@ export class WebSocketService  {
 
     wsConnect(){
         
+        const $this = this;
+
         this.connection = new WebSocket(this.url);
         
-        this.connection.onmessage = function (msg) {
-            console.log("message", msg);
+        this.connection.onmessage = function (track:Track) {
+            console.log("track", track);
+            $this.track.emit(track);
         }
 
         this.connection.onerror = (arg) => {
