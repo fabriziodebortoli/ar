@@ -10,6 +10,8 @@ import { TrackComponent } from './track/track.component';
 })
 export class TracksComponent implements AfterContentInit {
 
+    @ViewChild('tracksContainer') tracksContainer: ElementRef;
+
     tracks: Track[];
 
     constructor(
@@ -18,6 +20,9 @@ export class TracksComponent implements AfterContentInit {
     ) { }
 
     ngAfterContentInit() {
-        this.tracksService.getTracks().subscribe((tracks: Track[]) => this.tracks = tracks);
+
+        this.tracksService.getTracks().subscribe((tracks: Track[]) => {
+            this.tracks = tracks;
+        });
     }
 }
